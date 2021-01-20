@@ -1,0 +1,11 @@
+/.vs/*
+/migrationProcess.txt
+/WebAPIStarterTemplate.API/bin/*
+/WebAPIStarterTemplate.API/data.db
+/WebAPIStarterTemplate.API/obj/*
+/WebAPIStarterTemplate.Core/bin/*
+/WebAPIStarterTemplate.Core/obj/*
+/WebAPIStarterTemplate.Data/bin/*
+/WebAPIStarterTemplate.Services/obj/*
+/WebAPIStarterTemplate.Services/bin/*
+/WebAPIStarterTemplate.Data/obj/*
