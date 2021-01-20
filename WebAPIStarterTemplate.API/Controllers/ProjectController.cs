@@ -82,6 +82,25 @@ namespace WebAPIStarterTemplate.API.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<IEnumerable<ProjectRessource>>> UpdateProject(int id, SaveProjectRessource saveProjectRessource)
+        {
+            //Validation
+            var validation = new SaveProjectRessourceValidation();
+            var validationResult = await validation.ValidateAsync(saveProjectRessource);
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
+            //Project Exist ?
+            var project = await _projectService.GetProjectById(id);
+            if (project == null) return BadRequest("Project Not found");
+
+            var projectUpdated = _mapperService.Map<SaveProjectRessource, Project>(saveProjectRessource);
+            await _projectService.UpdateProject(project, projectUpdated);
+
+            var projectRessourceUpdate = _mapperService.Map<Project, SaveProjectRessource>(projectUpdated);
+            return Ok(projectRessourceUpdate);
+
+        }
 
     }
 }
