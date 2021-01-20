@@ -58,7 +58,7 @@ namespace WebAPIStarterTemplate.API.Controllers
         }
 
         [HttpPost()]
-        public async Task<ActionResult<IEnumerable<ProjectRessource>>> CreateProject(SaveProjectRessource saveProjectRessource)
+        public async Task<ActionResult<ProjectRessource>> CreateProject(SaveProjectRessource saveProjectRessource)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace WebAPIStarterTemplate.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<IEnumerable<ProjectRessource>>> UpdateProject(int id, SaveProjectRessource saveProjectRessource)
+        public async Task<ActionResult<ProjectRessource>> UpdateProject(int id, SaveProjectRessource saveProjectRessource)
         {
             //Validation
             var validation = new SaveProjectRessourceValidation();
@@ -97,9 +97,22 @@ namespace WebAPIStarterTemplate.API.Controllers
             var projectUpdated = _mapperService.Map<SaveProjectRessource, Project>(saveProjectRessource);
             await _projectService.UpdateProject(project, projectUpdated);
 
-            var projectRessourceUpdate = _mapperService.Map<Project, SaveProjectRessource>(projectUpdated);
+            var projectUpdateNew = await _projectService.GetProjectById(id);
+            var projectRessourceUpdate = _mapperService.Map<Project, ProjectRessource>(projectUpdateNew);
             return Ok(projectRessourceUpdate);
 
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult> DeleteProject(int id)
+        {
+            var projectToDelete = await _projectService.GetProjectById(id);
+            if (projectToDelete == null) return BadRequest("Project not found");
+
+            await _projectService.DeleteProject(projectToDelete);
+
+            return NoContent();
         }
 
     }
