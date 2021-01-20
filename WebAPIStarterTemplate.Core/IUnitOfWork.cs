@@ -8,6 +8,7 @@ namespace WebAPIStarterTemplate.Core
     {
         IProjectTaskRepository ProjectTasks { get; }
         IProjectRepository Projects { get; }
+        IUserRepository Users { get; }
         Task<int> CommitAsync();
 
     }

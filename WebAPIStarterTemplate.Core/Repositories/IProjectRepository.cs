@@ -7,5 +7,6 @@ namespace WebAPIStarterTemplate.Core.Repositories
 {
     public interface IProjectRepository : IRepository<Project>
     {
+        IEnumerable<ProjectTask> GetAllByTasks(int taskId);
     }
 }

@@ -13,6 +13,7 @@ namespace WebAPIStarterTemplate.Data
         private readonly WebAPIStarterTemplateDbContext _context;
         private IProjectTaskRepository _timeRepository;
         private IProjectRepository _projectRepository;
+        private IUserRepository _userRepository;
 
         public UnitOfWork(WebAPIStarterTemplateDbContext context)
         {
@@ -21,6 +22,7 @@ namespace WebAPIStarterTemplate.Data
 
         public IProjectTaskRepository ProjectTasks => _timeRepository = _timeRepository ?? new ProjectTaskRepository(_context);
         public IProjectRepository Projects => _projectRepository = _projectRepository ?? new ProjectRepository(_context);
+        public IUserRepository Users => _userRepository = _userRepository ?? new UserRepository(_context);
 
         public async Task<int> CommitAsync()
         {
